@@ -1,0 +1,58 @@
+<div id="body" class="container">
+    <div class="row" id="row1">
+        <div class="form-group col-xs-6">
+            <div class="input-group" ><span class=" input-group-addon"style="background-color:#5cb85c;border-color: #4cae4c;color: #fff;">Video</span>
+                <input  type="text" class="form-control" placeholder="Please insert your link" [(ngModel)]="linkUrl"/>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngFor='let actions of listactions; let i = index'>
+        <div class="col-xs-3 no-padding form-inline">
+            <span class="span">
+                <label>Step {{i+1}}:</label>
+            </span>
+            <select class="form-control" [(ngModel)]="actions.type">
+                <option *ngFor="let type of types">{{type}}</option>
+            </select>
+        </div>
+        <div class="col-xs-3 no-padding form-inline" *ngIf="actions.type == 'Add video' || actions.type == 'Add audio'">
+            <span class="span">
+                <label>File:</label>
+            </span>
+            <select class="form-control" [(ngModel)]="actions.file">
+                <option *ngFor="let file of files">{{file}}</option>
+            </select>
+        </div>
+        <div class="col-xs-3 no-padding form-inline">
+            <span class="span">
+                <label>From:</label>
+            </span>
+            <input class="form-control start" [(ngModel)]="actions.start" type="text" placeholder="00:00"/>
+        </div>
+        <div class="col-xs-3 no-padding form-inline">
+            <span class="span">
+                <label>To:</label>
+            </span>
+            <input class="form-control end" [(ngModel)]="actions.end" type="text" placeholder="00:00"/>
+            <a href="#">
+                <span  class="glyphicon glyphicon-remove" style="margin-left:10px" (click)="removeStep(i)"></span>
+            </a>
+        </div>
+    </div>
+    <div class="row" >
+        <div *ngIf="error"  class="error-message col-xs-6">wrong time format ! please fill again
+        </div>
+        <!--<div id="loader"  class="loader "></div>-->
+        <div class="cssload-loader hidden" id="loader"></div>
+        </div>
+    <!--<input  type="button" *ngIf="this.n<5" (click)="addStep(i)" value="Add Step"/ >-->
+    <button  type="button" class="btn btn-success  " id="buttonAdd" *ngIf="this.n<4" (click)="addStep(i)" >Add Step
+        <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    <input type="submit" class="btn btn-success " (click)="submit()" value="Submit"/>
+    <div class="row">
+        <div class=" no-padding form-inline">
+        <span>Your Result <a target="_blank" href="{{resultVideo}}">{{resultVideo}}</a></span>
+        </div>
+    </div>
+</div>
